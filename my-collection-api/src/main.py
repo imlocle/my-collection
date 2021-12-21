@@ -12,7 +12,7 @@ Base.metadata.create_all(engine)
 
 @app.route('/')
 def home():
-    return "hello"
+    return "bye"
 
 
 @app.route('/items')
@@ -31,7 +31,7 @@ def list_items():
 def create_item():
     print(request.data)
     posted_item = ItemSchema(
-        only=('name','purchased_price', 'description')).load(request.get_json())
+        only=('name', 'purchased_price', 'description')).load(request.get_json())
     item = Item(**posted_item, location='', sku='', created_by="Loc Le")
     session = Session()
     session.add(item)
