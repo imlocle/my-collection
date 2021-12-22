@@ -2,11 +2,12 @@ from datetime import datetime
 from sqlalchemy import create_engine, Column, String, Integer, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from ..utils.constants import SQLITE
 
-engine = create_engine(f'sqlite:///my-collection.db')
+engine = create_engine(SQLITE)
 Session = sessionmaker(bind=engine)
-
 Base = declarative_base()
+
 
 class Entity():
     id = Column(Integer, primary_key=True)

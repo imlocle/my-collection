@@ -12,44 +12,36 @@ cors = CORS(app)
 Base.metadata.create_all(engine)
 
 
-@app.route('/')
+@app.route('/api')
 def home():
     return "bye"
 
 
-@app.route('/items')
+@app.route('/api/items')
 def list_items():
-    session = Session()
-    item_objects = session.query(Item).all()
-
-    schema = ItemSchema(many=True)
-    items = schema.dump(item_objects)
-
-    session.close()
+    with Session.begin() as session:
+        item_objects = session.query(Item).all()
+        schema = ItemSchema(many=True)
+        items = schema.dump(item_objects)
     return jsonify(sorted(items, key=lambda i: i['name']))
 
 
-@app.route('/item', methods=["POST"])
+@app.route('/api/item', methods=["POST"])
 def create_item():
-    posted_item = ItemSchema(
-        only=(ITEM_SCHEMA_COLUMNS)).load(request.get_json())
-    item = Item(**posted_item, created_by="Loc Le")
-    session = Session()
-    session.add(item)
-    session.commit()
-
-    new_item = ItemSchema().dump(item)
-    session.close()
+    with Session.begin() as session:
+        posted_item = ItemSchema(
+            only=(ITEM_SCHEMA_COLUMNS)).load(request.get_json())
+        item = Item(**posted_item, created_by="Loc Le")
+        session.add(item)
+        new_item = ItemSchema().dump(item)
     return jsonify(new_item), 201
 
 
-@app.route('/item/<id>', methods=["DELETE"])
+@app.route('/api/item/<id>', methods=["DELETE"])
 def delete_item(id):
-    session = Session()
-    obj = session.query(Item).filter_by(id=id).one()
-    session.delete(obj)
-    session.commit()
-    session.close()
+    with Session.begin() as session:
+        item = session.query(Item).filter_by(id=id).one()
+        session.delete(item)
     return list_items()
 
 
