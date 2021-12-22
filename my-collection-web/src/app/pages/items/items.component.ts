@@ -14,7 +14,14 @@ import { FormControl, Validators } from '@angular/forms';
   styleUrls: ['./items.component.scss'],
 })
 export class ItemsComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'description', 'remove'];
+  displayedColumns: string[] = [
+    'name',
+    'purchased_price',
+    'location',
+    'description',
+    'sku',
+    'remove',
+  ];
   dataSource!: Observable<Item[]>;
 
   constructor(
@@ -27,6 +34,7 @@ export class ItemsComponent implements OnInit {
   }
 
   loadItems() {
+    const items = this.itemsApiService.listItems();
     this.dataSource = this.itemsApiService.listItems();
   }
 

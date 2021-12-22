@@ -16,7 +16,7 @@ export class EditAddItemDialogComponent implements OnInit {
   ]);
   itemPurchasedPrice = new FormControl('');
   itemSku = new FormControl('');
-  itemLocation = new FormControl('')
+  itemLocation = new FormControl('');
   itemDescription = '';
 
   constructor(
