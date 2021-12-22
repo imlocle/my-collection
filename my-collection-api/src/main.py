@@ -1,7 +1,9 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from .entities.entity import Session, engine, Base
-from .entities.item import Item, ItemSchema
+
+from .models.entity import Base, Session, engine
+from .models.item import Item, ItemSchema
+from .utils.constants import ITEM_SCHEMA_COLUMNS
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -24,15 +26,14 @@ def list_items():
     items = schema.dump(item_objects)
 
     session.close()
-    return jsonify(items)
+    return jsonify(sorted(items, key=lambda i: i['name']))
 
 
 @app.route('/item', methods=["POST"])
 def create_item():
-    print(request.data)
     posted_item = ItemSchema(
-        only=('name', 'purchased_price', 'description')).load(request.get_json())
-    item = Item(**posted_item, location='', sku='', created_by="Loc Le")
+        only=(ITEM_SCHEMA_COLUMNS)).load(request.get_json())
+    item = Item(**posted_item, created_by="Loc Le")
     session = Session()
     session.add(item)
     session.commit()

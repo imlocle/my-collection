@@ -5,22 +5,45 @@
       <input matInput [formControl]="itemName" required placeholder="Name" />
     </mat-form-field>
   </p>
-  <mat-form-field appearance="standard">
-    <input
+  <p>
+    <mat-form-field appearance="standard">
+      <input
       matInput
       [formControl]="itemPurchasedPrice"
       required
-      placeholder="Purchased Price"
-    />
-  </mat-form-field>
-  <mat-form-field appearance="standard">
-    <textarea
+      placeholder="0.00"
+      />
+      <span matPrefix>$&nbsp;</span>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="standard">
+      <input
+      matInput
+      [formControl]="itemLocation"
+      placeholder="Location"
+      />
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="standard">
+      <input
+      matInput
+      [formControl]="itemSku"
+      placeholder="Sku"
+      />
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="standard">
+      <textarea
       matInput
       rows="1"
       [(ngModel)]="itemDescription"
       placeholder="Description"
-    ></textarea>
-  </mat-form-field>
+      ></textarea>
+    </mat-form-field>
+  </p>
   <div mat-dialog-actions>
     <button mat-button (click)="onNoClick()">Cancel</button>
     <button mat-button color="primary" (click)="saveItem()">Add Item</button>
