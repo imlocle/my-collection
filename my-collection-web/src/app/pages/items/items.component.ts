@@ -17,12 +17,13 @@ export class ItemsComponent implements OnInit {
   displayedColumns: string[] = [
     'name',
     'purchased_price',
-    'location',
+    'city',
+    'state',
     'description',
     'sku',
     'remove',
   ];
-  dataSource!: Observable<Item[]>;
+  dataSource: Item[] = [];
 
   constructor(
     private itemsApiService: ItemsApiService,
@@ -34,8 +35,9 @@ export class ItemsComponent implements OnInit {
   }
 
   loadItems() {
-    const items = this.itemsApiService.listItems();
-    this.dataSource = this.itemsApiService.listItems();
+    this.itemsApiService.listItems().subscribe((value) => {
+      this.dataSource = value;
+    });
   }
 
   addItem() {
@@ -54,5 +56,11 @@ export class ItemsComponent implements OnInit {
       console.log(`Item: ${id}: Deleted`);
       this.loadItems();
     });
+  }
+
+  getItemDetail(id: number) {
+    this.itemsApiService.getItem(id).subscribe((value) => {
+      console.log(value);
+    })
   }
 }

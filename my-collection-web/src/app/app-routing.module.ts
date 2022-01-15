@@ -13,6 +13,10 @@ const routes: Routes = [
     component: ItemsComponent,
     // canActivate: [CanActivateRouteService]
   },
+  {
+    path: 'item/:id',
+    component: ItemsComponent,
+  },
 ];
 
 @NgModule({

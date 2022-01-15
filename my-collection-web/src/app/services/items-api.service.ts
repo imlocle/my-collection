@@ -29,14 +29,22 @@ export class ItemsApiService {
     console.log(item);
     return this.http
       .post(`${API_URL}/item`, item, this.httpHeader)
-      .pipe(catchError(this._handleError(`Error: Failed to create ${item}`)));
+      .pipe(
+        catchError(this._handleError(`Error: Failed to create item: ${item}`))
+      );
+  }
+
+  getItem(id: number) {
+    return this.http
+      .get<Item>(`${API_URL}/item/${id}`)
+      .pipe(catchError(this._handleError(`Error: Failed to get item: ${id}`)));
   }
 
   deleteItem(id: number): Observable<undefined> {
     return this.http
       .delete(`${API_URL}/item/${id}`, this.httpHeader)
       .pipe(
-        catchError(this._handleError(`Error: Failed to delete item:${id}`))
+        catchError(this._handleError(`Error: Failed to delete item: ${id}`))
       );
   }
 }

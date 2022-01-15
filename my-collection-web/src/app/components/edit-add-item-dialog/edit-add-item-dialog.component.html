@@ -16,15 +16,18 @@
       <span matPrefix>$&nbsp;</span>
     </mat-form-field>
   </p>
-  <p>
     <mat-form-field appearance="standard">
       <input
       matInput
-      [formControl]="itemLocation"
-      placeholder="Location"
+      [formControl]="itemCity"
+      placeholder="City"
       />
     </mat-form-field>
-  </p>
+    <mat-form-field appearance="standard">
+      <mat-select placeholder="State" [(ngModel)]="itemState">
+        <mat-option *ngFor="let state of states" [value]="state">{{state.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
   <p>
     <mat-form-field appearance="standard">
       <input

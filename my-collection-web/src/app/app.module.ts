@@ -19,6 +19,8 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
+import { StatesApiService } from './services/states-api.service';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -32,20 +34,21 @@ import { MatDividerModule } from '@angular/material/divider';
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-    MatTableModule,
-    MatIconModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatFormFieldModule,
     FormsModule,
     ReactiveFormsModule,
+    MatButtonModule,
     MatCardModule,
-    MatInputModule,
-    MatToolbarModule,
-    MatSidenavModule,
+    MatDialogModule,
     MatDividerModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatSidenavModule,
+    MatTableModule,
+    MatToolbarModule,
+    MatSelectModule,
   ],
-  providers: [ItemsApiService],
+  providers: [ItemsApiService, StatesApiService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
