@@ -1,7 +1,7 @@
 from marshmallow.utils import pprint
-from .constants import CITY, STATE, NAME
-from ..models.state import State, StateSchema
-from ..models.city import City
+from .constant import CITY, STATE, NAME
+from ..model.state import State, StateSchema
+from ..model.city import City
 
 
 def check_state(session, posted_item):

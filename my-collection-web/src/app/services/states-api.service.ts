@@ -5,7 +5,6 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 import { API_URL } from '../env';
-import { catchError, Observable } from 'rxjs';
 import { State } from '../models/state.model';
 
 @Injectable()

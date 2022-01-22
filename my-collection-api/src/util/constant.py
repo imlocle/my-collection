@@ -10,3 +10,5 @@ SQLITE = 'sqlite:///my-collection.db'
 # list
 ITEM_SCHEMA_COLUMNS = [NAME, DESCRIPTION, CITY,
                        PURCHASED_PRICE, SKU, STATE]
+
+URL_PREFIX = '/api'

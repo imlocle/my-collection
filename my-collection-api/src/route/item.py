@@ -1,29 +1,18 @@
-from flask import Flask, jsonify, request
-from flask_cors import CORS
+from flask import Blueprint, jsonify, request
 from marshmallow import pprint
 from sqlalchemy.orm import joinedload
 
-from .models.city import CitySchema
-from .models.entity import Base, Session, engine
-from .models.item import Item, ItemSchema
-from .models.state import StateSchema, State
-from .utils.constants import (CITY, DESCRIPTION, ITEM_SCHEMA_COLUMNS, NAME,
-                              PURCHASED_PRICE, SKU)
-from .utils.helper import check_city, check_state
+from ..model.city import CitySchema
+from ..model.entity import Session
+from ..model.item import Item, ItemSchema
+from ..model.state import StateSchema
+from ..util.constant import (CITY, DESCRIPTION, ITEM_SCHEMA_COLUMNS, NAME,
+                             PURCHASED_PRICE, SKU)
+from ..util.helper import check_city, check_state
 
-app = Flask(__name__)
-cors = CORS(app)
+item_api = Blueprint('item', __name__)
 
-# generate database schema
-Base.metadata.create_all(engine)
-
-
-@app.route('/api')
-def home():
-    return 200
-
-
-@app.route('/api/items')
+@item_api.route('/items')
 def list_items():
     with Session.begin() as session:
         query_items = session.query(Item).options(
@@ -32,7 +21,7 @@ def list_items():
     return jsonify(sorted(items, key=lambda i: i[NAME]))
 
 
-@app.route('/api/item', methods=["POST"])
+@item_api.route('/item', methods=["POST"])
 def create_item():
     with Session.begin() as session:
         posted_item = ItemSchema(
@@ -53,32 +42,17 @@ def create_item():
             city_id=city['id']
         )
         session.add(item)
-        new_item = ItemSchema().dump(item)
         print('New Item Added')
-    return jsonify(new_item), 201
+        return ItemSchema().dump(item)
 
 
-@app.route('/api/item/<id>', methods=["GET", "DELETE"])
+@item_api.route('/item/<id>', methods=["GET", "PUT", "DELETE"])
 def item(id):
     with Session.begin() as session:
         if request.method == 'GET':
             query_item = session.query(Item).filter_by(id=id).one()
-            item = ItemSchema().dump(query_item)
-            return jsonify(item), 201
+            return ItemSchema().dump(query_item)
         if request.method == 'DELETE':
             item = session.query(Item).filter_by(id=id).one()
             session.delete(item)
-    return list_items()
-
-
-@app.route('/api/states')
-def list_states():
-    with Session.begin() as session:
-        state_objects = session.query(State).all()
-        schema = StateSchema(many=True)
-        states = schema.dump(state_objects)
-    return jsonify(sorted(states, key=lambda i: i[NAME]))
-
-
-if __name__ == "__main__":
-    app.run(debug=True)
+            return list_items()
