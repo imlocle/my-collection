@@ -1,12 +1,15 @@
+from argparse import ArgumentParser
+
+from flasgger import Swagger
 from flask import Flask
 from flask_cors import CORS
-from flasgger import Swagger
+
+from src.model.entity import Base, engine
 from src.route.home import home_api
 from src.route.item import item_api
 from src.route.location import location_api
-from src.model.entity import Base, engine
-from argparse import ArgumentParser
 from src.util.constant import URL_PREFIX
+
 
 def create_app():
     app = Flask(__name__)

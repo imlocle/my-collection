@@ -1,7 +1,7 @@
-from marshmallow.utils import pprint
-from .constant import CITY, STATE, NAME
-from ..model.state import State, StateSchema
-from ..model.city import City
+from .constant import CATEGORY, CITY, STATE, NAME
+from ..schema.location import StateSchema
+from ..model.location import City, State
+from ..model.category import Category, CategorySchema
 
 
 def check_state(session, posted_item):
@@ -30,3 +30,14 @@ def check_city(session, posted_item):
         query_city = session.query(City).filter_by(
             name=posted_item[CITY][NAME]).one()
     return query_city
+
+def check_category(session, posted_item):
+    try:
+        query_cat = session.query(Category).filter_by(
+            name=posted_item[CATEGORY][NAME]).one()
+    except:
+        category = Category(name=posted_item[CATEGORY][NAME])
+        session.add(category)
+        query_cat = session.query(Category).filter_by(
+            name=posted_item[CATEGORY][NAME]).one()
+    return query_cat

@@ -17,10 +17,9 @@ export class ItemsComponent implements OnInit {
   displayedColumns: string[] = [
     'name',
     'purchased_price',
+    'category',
     'city',
     'state',
-    'description',
-    'sku',
     'remove',
   ];
   dataSource: Item[] = [];
@@ -56,11 +55,5 @@ export class ItemsComponent implements OnInit {
       console.log(`Item: ${id}: Deleted`);
       this.loadItems();
     });
-  }
-
-  getItemDetail(id: number) {
-    this.itemsApiService.getItem(id).subscribe((value) => {
-      console.log(value);
-    })
   }
 }

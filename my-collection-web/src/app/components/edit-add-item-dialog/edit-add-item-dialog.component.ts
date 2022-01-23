@@ -13,6 +13,8 @@ import { StatesApiService } from 'src/app/services/states-api.service';
 })
 export class EditAddItemDialogComponent implements OnInit {
   itemDescription = '';
+  itemModelNumber = '';
+  itemManufacturer = '';
   itemCity = new FormControl('');
   itemName = new FormControl('', [
     Validators.required,
@@ -20,8 +22,10 @@ export class EditAddItemDialogComponent implements OnInit {
   ]);
   itemPurchasedPrice = new FormControl('');
   itemSku = new FormControl('');
-  itemState = new FormControl('');
+  itemState!: State;
   states: State[] = [];
+  categories: any = [];
+  itemCategory = '';
 
   constructor(
     public dialogRef: MatDialogRef<EditAddItemDialogComponent>,
@@ -31,6 +35,7 @@ export class EditAddItemDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadStates();
+    this.loadCategories();
   }
 
   loadStates() {
@@ -39,25 +44,30 @@ export class EditAddItemDialogComponent implements OnInit {
     });
   }
 
+  loadCategories() {
+    this.itemsApiService.listCategories().subscribe((value) => {
+      this.categories = value;
+    });
+  }
+
   onNoClick(): void {
     this.dialogRef.close();
   }
 
   saveItem() {
-    const state: State = {
-      name: 'Texas',
-      abrv: 'TX',
-    };
     const city: City = {
-      name: 'Austin'
+      name: this.itemCity.value
     };
     const item: Item = {
+      category: "Music",
+      city: city,
+      description: this.itemDescription,
+      manufacturer: this.itemManufacturer,
+      model_number: this.itemModelNumber,
       name: this.itemName.value,
       purchased_price: this.itemPurchasedPrice.value,
       sku: this.itemSku.value,
-      city: city,
-      description: this.itemDescription,
-      state: state,
+      state: this.itemState,
     };
     this.itemsApiService.createItem(JSON.stringify(item)).subscribe(() => {
       this.dialogRef.close();

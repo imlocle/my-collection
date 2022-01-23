@@ -21,6 +21,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
 import { StatesApiService } from './services/states-api.service';
 import { MatSelectModule } from '@angular/material/select';
+import { ItemDetailComponent } from './pages/item-detail/item-detail.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { MatSelectModule } from '@angular/material/select';
     ItemsComponent,
     EditAddItemDialogComponent,
     SidebarComponent,
+    ItemDetailComponent,
   ],
   imports: [
     BrowserModule,

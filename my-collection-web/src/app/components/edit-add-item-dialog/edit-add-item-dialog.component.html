@@ -2,6 +2,13 @@
 <div>
   <p>
     <mat-form-field appearance="standard">
+      <mat-select placeholder="Category" [(ngModel)]="itemCategory">
+        <mat-option *ngFor="let cat of categories" [value]="cat">{{cat.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="standard">
       <input matInput [formControl]="itemName" required placeholder="Name" />
     </mat-form-field>
   </p>

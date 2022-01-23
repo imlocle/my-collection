@@ -47,4 +47,8 @@ export class ItemsApiService {
         catchError(this._handleError(`Error: Failed to delete item: ${id}`))
       );
   }
+
+  listCategories() {
+    return this.http.get(`${API_URL}/item/categories`);
+  }
 }

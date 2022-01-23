@@ -1,10 +1,15 @@
-Python 3.8
+Python 3.9.9
 Flask
 SQLAlchemy
 Marshmallow
+flasgger (https://github.com/flasgger/flasgger)
+https://github.com/bajcmartinez/flask-api-starter-kit
 
-`pipenv shell`
+Environment:
+* `pipenv shell`
 
-`python -m src.main`
+Run:
+* `python -m flask run`
 
-`./bootstrap.sh`
+Testing:
+* `python -m unittest`

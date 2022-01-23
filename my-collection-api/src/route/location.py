@@ -1,5 +1,6 @@
 from ..model.entity import Session
-from ..model.state import StateSchema, State
+from ..model.location import State
+from ..schema.location import StateSchema
 from ..util.constant import NAME
 from flask import jsonify, Blueprint
 
